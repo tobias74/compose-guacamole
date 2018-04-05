@@ -19,6 +19,16 @@ services:
     image: guacamole/guacd:0.9.12-incubating
     restart: always
 
+
+  desktop:
+    container_name: remote_desktop
+    build: ./desktop
+    restart: always
+    expose:
+      - 5901
+
+
+
   guacamole:
     image: guacamole/guacamole:0.9.12-incubating
     restart: always
@@ -27,6 +37,8 @@ services:
     links:
       - guacd
       - db
+      - desktop
+      
     environment:
       GUACD_HOSTNAME: guacd
       MYSQL_HOSTNAME: db
@@ -34,5 +46,9 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
+
+
+    
+    
 volumes:
   data:
